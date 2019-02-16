@@ -1,3 +1,27 @@
 <resources>
-    <string name="app_name">Multi Stopwatch</string>
+  <string name="app_name">Multi Stopwatch</string>
+  <string name="action_settings">Settings</string>
+  <string name="hello_world">Hello world!</string>
+  <string name="start">start</string>
+  <string name="lap">lap</string>
+  <string name="stop">stop</string>
+  <string name="initialMinute">00</string>
+  <string name="initialSec">00</string>
+  <string name="initialMillSec">0</string>
+  <string name="secSeparator">:</string>
+  <string name="millSecSeparator">.</string>
+  <string name="prefer_colsNum_key">NumOfStopwatches</string>
+  <string name="prefer_colsNum_summary">Change No. of Stopwatches.</string>
+  <string name="prefer_colsNum_title">No. of Stopwatches</string>
+  <string name="option_label_setting">Preference</string>
+  <string name="OK">OK</string>
+  <string name="Cancel">Cancel</string>
+  <string name="fastest">fastest</string>
+  <string name="latest">latest</string>
+  <string name="prefer_lapTimeSort_key">LapTimeSortOrder</string>
+  <string name="prefer_lapTimeSort_summary">Change the sorting order of the lap times.</string>
+  <string name="prefer_lapTimeSort_title">Lap time sorting order</string>
+  <string name="prefer_runmode_key">StopwatchesRunMode</string>
+  <string name="prefer_runmode_summary">Change the run mode of stopwatches.</string>
+  <string name="prefer_runmode_title">Stopwatches run mode</string>
 </resources>

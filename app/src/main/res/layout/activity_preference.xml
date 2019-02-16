@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:descendantFocusability="blocksDescendants">
+
+  <!-- for preference -->
+
+  <fragment
+    android:id="@+id/preference"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_above="@+id/layout_buttons"
+    android:name="orion.app.stopwatch.preference.MainPreferenceFragment"/>
+
+  <!--
+  <ListView
+      android:id="@+id/android:id/list"
+      android:layout_width="fill_parent"
+      android:layout_height="fill_parent"
+      android:layout_above="@+id/layout_buttons"
+      android:layout_alignParentTop="true" />
+ -->
+
+  <LinearLayout
+    android:id="@+id/layout_buttons"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="5dp"
+    android:layout_alignParentBottom="true"
+    android:layout_centerHorizontal="true"
+    android:background="#dddddd"
+    android:descendantFocusability="blocksDescendants"
+    android:orientation="horizontal">
+
+    <Button
+      android:id="@+id/button_ok"
+      style="@android:attr/buttonBarButtonStyle"
+      android:layout_width="0dip"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      android:text="@string/OK"
+      android:textSize="30sp"/>
+
+    <Button
+      android:id="@+id/button_cancel"
+      style="@android:attr/buttonBarButtonStyle"
+      android:layout_width="0dip"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      android:text="@string/Cancel"
+      android:textSize="30sp"/>
+  </LinearLayout>
+
+</RelativeLayout>
