@@ -1,8 +1,11 @@
 # android-multi-stopwatch
 
-![multistopwatch_demo_01](https://user-images.githubusercontent.com/6317652/52899617-573d5600-322f-11e9-9999-5c6d6b932953.gif)
+![multistopwatch_demo_02](https://user-images.githubusercontent.com/6317652/53475569-954e3b80-3ab3-11e9-9e65-2f1d7102392a.gif)
 
 ## Work in progress
 
-- Lap time
 - Run stopwatches independently
+
+## Future work
+
+- Option to change lap time sort order
