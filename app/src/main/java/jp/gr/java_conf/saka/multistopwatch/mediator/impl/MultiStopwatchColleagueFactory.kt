@@ -49,13 +49,34 @@ class MultiStopwatchColleagueFactory(
         lowerButton.setTextSize(TypedValue.COMPLEX_UNIT_PX, buttonTextSize)
 
         lapTimeListView.layoutParams = elementLayout
+        val lapTimeSize = getFittedTextSize(
+            (lapTimeView.findViewById(R.id.lapTimeText) as TextView).textSize,
+            numOfStopwatches
+        )
+        val lapTypeSize = getFittedTextSize(
+            (lapTimeView.findViewById(R.id.lapType) as TextView).textSize,
+            numOfStopwatches
+        )
 
+        val container = TextSizeContainer(TypedValue.COMPLEX_UNIT_PX, lapTimeSize)
+        val lapTypeSizeCon = TextSizeContainer(TypedValue.COMPLEX_UNIT_PX, lapTypeSize)
+        val lapTimeTextAdapter =
+            LapTimeTextAdapter(
+                context,
+                R.layout.elem_laptime,
+                container,
+                lapTypeSizeCon,
+                lapTypeSizeCon
+            )
+        lapTimeListView.adapter = lapTimeTextAdapter
         return MultiStopwatchColleague(
             StopwatchImpl(),
             stopwatchView,
             textView,
             upperButton,
             lowerButton,
+            lapTimeListView,
+            lapTimeTextAdapter,
             TimeFormatters.newDefaultInstance()
         )
     }

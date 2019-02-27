@@ -81,6 +81,6 @@ class StopwatchImpl() : IStopwatch {
     }
 
     private fun getCurrentTimeMill(): Long {
-        return System.currentTimeMillis() / 50 * 50
+        return System.currentTimeMillis() / 100 * 100
     }
 }

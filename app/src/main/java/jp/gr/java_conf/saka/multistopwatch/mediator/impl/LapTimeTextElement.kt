@@ -1,11 +1,13 @@
 package jp.gr.java_conf.saka.multistopwatch.mediator.impl
 
+import jp.gr.java_conf.saka.multistopwatch.mediator.base.ILapTimeContainer
+
 class LapTimeTextElement(
-    val lapNumber: Int,
+    private val lapNumber: Int,
     val type: String,
     val lapTime: String,
-    val lapTimeValue: Long
-) {
+    private val lapTimeValue: Long
+) : ILapTimeContainer {
     companion object {
         fun lapTimeComparator(): Comparator<LapTimeTextElement> {
             return compareBy { it.lapTimeValue }
@@ -14,5 +16,13 @@ class LapTimeTextElement(
         fun lapNumberComparator(): Comparator<LapTimeTextElement> {
             return compareBy { it.lapNumber }
         }
+    }
+
+    override fun getLapNumber(): Int {
+        return lapNumber
+    }
+
+    override fun getLapTimeValue(): Long {
+        return lapTimeValue
     }
 }

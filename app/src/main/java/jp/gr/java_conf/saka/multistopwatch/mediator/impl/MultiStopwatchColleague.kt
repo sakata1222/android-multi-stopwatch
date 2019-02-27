@@ -2,12 +2,10 @@ package jp.gr.java_conf.saka.multistopwatch.mediator.impl
 
 import android.view.View
 import android.widget.Button
+import android.widget.ListView
 import android.widget.TextView
 import jp.gr.java_conf.saka.multistopwatch.formatter.ITimeFormatter
-import jp.gr.java_conf.saka.multistopwatch.mediator.base.IMultiStopwatchColleague
-import jp.gr.java_conf.saka.multistopwatch.mediator.base.IMultiStopwatchMediator
-import jp.gr.java_conf.saka.multistopwatch.mediator.base.ISingleStopwatchMediator
-import jp.gr.java_conf.saka.multistopwatch.mediator.base.LapTimeSortTypeEnum
+import jp.gr.java_conf.saka.multistopwatch.mediator.base.*
 import jp.gr.java_conf.saka.multistopwatch.stopwatch.IStopwatch
 
 
@@ -17,6 +15,8 @@ class MultiStopwatchColleague(
     private val stopwatchTextView: TextView,
     private val upperButton: Button,
     private val lowerButton: Button,
+    private val lapTimeListView: ListView,
+    private val lapTimeTextAdapter: LapTimeTextAdapter,
     private val timeFormatter: ITimeFormatter
 ) :
     IMultiStopwatchColleague,
@@ -33,27 +33,27 @@ class MultiStopwatchColleague(
     init {
         startListener = object : View.OnClickListener {
             override fun onClick(p0: View?) {
-                collegueChanged(this)
                 stopwatch.start()
+                collegueChanged(this)
             }
         }
         stopListener = object : View.OnClickListener {
             override fun onClick(p0: View?) {
-                collegueChanged(this)
                 stopwatch.stop()
+                collegueChanged(this)
             }
         }
         lapListener = object : View.OnClickListener {
             override fun onClick(p0: View?) {
-                collegueChanged(this)
                 stopwatch.lap()
+                collegueChanged(this)
             }
 
         }
         resetListener = object : View.OnClickListener {
             override fun onClick(p0: View?) {
-                collegueChanged(this)
                 stopwatch.reset()
+                collegueChanged(this)
             }
         }
         upperButton.setOnClickListener(startListener);
@@ -71,9 +71,11 @@ class MultiStopwatchColleague(
     override fun setColleagueEnabled(enable: Boolean) {
         this.isEnable = enable
         if (enable) {
-            stopwatchTextView.isEnabled = true;
+            stopwatchTextView.isEnabled = true
+            lapTimeListView.isEnabled = true;
+            lapTimeTextAdapter.notifyDataSetChanged();
         } else {
-            disable();
+            disable()
         }
     }
 
@@ -101,7 +103,7 @@ class MultiStopwatchColleague(
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun reLoad() {
+    override fun reload() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
@@ -114,16 +116,49 @@ class MultiStopwatchColleague(
             changeButtonType(upperButton, ButtonTypeEnum.START);
             changeButtonType(lowerButton, ButtonTypeEnum.RESET);
         } else if (colleague == lapListener) {
-            // reLoadLapTime(); TODO
+            reloadLapTime()
         } else if (colleague == resetListener) {
-            // adapter.clear();TODO
-            // adapter.notifyDataSetChanged();TODO
+            lapTimeTextAdapter.clear();
+            lapTimeTextAdapter.notifyDataSetChanged()
             lowerButton.isEnabled = false;
             stopwatchTextView.text = timeFormatter.format(stopwatch.getCurrent());
             return;
         }
         multiMediator?.notifyCollegueChanged(this)
     }
+
+    private fun reloadLapTime() {
+        lapTimeTextAdapter.clear()
+        val elementList = createLapElementList(stopwatch.getLapList())
+        lapTimeTextAdapter.addAll(elementList)
+        lapTimeTextAdapter.notifyDataSetChanged()
+    }
+
+    private fun createLapElementList(
+        lapTimeList: List<Long>
+    ): List<LapTimeTextElement> {
+        val min = lapTimeList.min() ?: Long.MIN_VALUE
+        val isMin = { value: Long -> value == min }
+        val max = lapTimeList.max() ?: Long.MIN_VALUE
+        val isMax = { value: Long -> value == max }
+        val resolveType = fun(value: Long): LapTypeEnum {
+            return when {
+                isMin(value) -> LapTypeEnum.FASTEST
+                isMax(value) -> LapTypeEnum.SLOWEST
+                else -> LapTypeEnum.NONE
+            }
+        }
+        return lapTimeList.mapIndexed { i, value ->
+            LapTimeTextElement(
+                i + 1,
+                resolveType(value).displayName,
+                timeFormatter.format(value),
+                value
+            )
+        }
+            .sortedWith(LapTimeSortTypeEnum.getDefault().lapTimeComparator) // TODO  make sortType configurable
+    }
+
 
     private fun changeButtonType(button: Button, type: ButtonTypeEnum) {
         button.text = type.label
@@ -146,7 +181,7 @@ class MultiStopwatchColleague(
     enum class ButtonTypeEnum(val label: String) {
         START("Start"),
         STOP("Stop"),
-        LAP("Not Implemented"), // TODO
+        LAP("Lap"),
         RESET("Reset")
     }
 }

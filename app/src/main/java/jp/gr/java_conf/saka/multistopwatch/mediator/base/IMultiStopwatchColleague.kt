@@ -21,5 +21,5 @@ interface IMultiStopwatchColleague {
 
     fun setLapTimeSortType(lapTimeOrderType: LapTimeSortTypeEnum)
 
-    fun reLoad()
+    fun reload()
 }

@@ -28,8 +28,8 @@ class LapTimeTextAdapter(
         val lapType = v.findViewById(R.id.lapType) as TextView
         val lapTimeText = v.findViewById(R.id.lapTimeText) as TextView
 
-        lapNumberText.typeface = Typeface.create(Typeface.SERIF, Typeface.BOLD_ITALIC);
-        lapNumberText.text = elem.lapNumber.toString()
+        lapNumberText.typeface = Typeface.create(Typeface.SERIF, Typeface.BOLD);
+        lapNumberText.text = elem.getLapNumber().toString()
         lapType.text = elem.type
         lapTimeText.text = elem.lapTime
 
@@ -53,6 +53,6 @@ class LapTimeTextAdapter(
     }
 
     private fun getNewestPosition(): Int {
-        return getElements().indexOf(getElements().sortedBy { e -> e.lapNumber }.first())
+        return getElements().indexOf(getElements().sortedBy { e -> e.getLapNumber() }.first())
     }
 }

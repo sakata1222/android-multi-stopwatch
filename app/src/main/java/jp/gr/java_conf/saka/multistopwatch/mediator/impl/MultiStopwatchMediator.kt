@@ -68,7 +68,7 @@ class MultiStopwatchMediator(
     }
 
     override fun reload() {
-        stopwatchList.forEach { s -> s.reLoad() }
+        stopwatchList.forEach { s -> s.reload() }
     }
 
     private fun changeColleague(
